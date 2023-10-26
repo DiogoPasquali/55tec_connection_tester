@@ -8,7 +8,7 @@ class PortsChecker:
 
     def get_opened_ports(self):
         opened_ports = []
-        print(self.ports)
+
         for port in self.ports:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(1)

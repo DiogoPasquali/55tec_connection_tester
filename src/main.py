@@ -11,6 +11,7 @@ if __name__ == '__main__':
                 }
             }
         },
+        path="C:\\55pbx"
     )
 
     cn.start()
