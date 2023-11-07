@@ -5,7 +5,7 @@ class NotificationScreen:
     """
     Class for displaying a notification screen with information about missing ports.
     """
-    def __init__(self, missing_ports):
+    def __init__(self, missing_ports=None, browser_version=None):
         """
         Initializes an instance of the NotificationScreen class.
 
@@ -20,6 +20,13 @@ class NotificationScreen:
 
         self.missing_ports = tk.Label(self.root, text=", ".join(map(str, missing_ports)))
         self.missing_ports.pack(pady=10)
+
+        if browser_version:
+            self.label = tk.Label(self.root, text="The browser is incorrect version:")
+            self.label.pack(pady=10)
+
+            self.missing_ports = tk.Label(self.root, text=", ".join(map(str, browser_version)))
+            self.missing_ports.pack(pady=10)
 
         self.close_button = tk.Button(self.root, text="Close", command=self.close)
         self.close_button.pack(pady=10)

@@ -1,5 +1,5 @@
 import time
-import logging
+from .logger import Logger
 
 
 class HealthCheck:
@@ -17,6 +17,7 @@ class HealthCheck:
         """
         self.ports_checker = checker
         self.path = path
+        self.logger = Logger(path)
 
     def health_check(self):
         """
@@ -33,22 +34,19 @@ class HealthCheck:
         Exceptions:
             - Any exception raised within the 'try' block is logged as an error in the log file.
         """
-        logging.basicConfig(filename=f'{self.path}/errors.log', level=logging.ERROR,
-                            format='%(asctime)s [%(levelname)s]: %(message)s',
-                            datefmt='%Y-%m-%d %H:%M:%S')
 
         while True:
             try:
                 opened_ports = self.ports_checker.get_opened_ports()
                 missing_ports = self.ports_checker.get_missing_ports()
-                logging.info(f'Open ports: {opened_ports}')
+                self.logger.log(f'Open ports: {opened_ports}')
 
                 if missing_ports:
-                    logging.error(f'Missing ports: {missing_ports}')
+                    self.logger.error(f'Missing ports: {missing_ports}')
                 else:
-                    logging.info('All ports are present in the list.')
+                    self.logger.log('All ports are present in the list.')
 
                 time.sleep(300)
 
             except Exception as e:
-                logging.exception(f'Unexpected error: {str(e)}')
+                self.logger.exception(f'Unexpected error: {str(e)}')
