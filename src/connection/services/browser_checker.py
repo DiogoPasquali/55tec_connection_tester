@@ -11,6 +11,9 @@ class BrowserInfo:
     def __init__(self, path):
         """
         Initializes an instance of the BrowserInfo class.
+
+        Args:
+            path (str): Path for the logger.
         """
         self.user_agent = generate_user_agent()
         self.logger = Logger(path)
@@ -20,7 +23,7 @@ class BrowserInfo:
         Gets the user's browser information.
 
         Returns:
-            Tuple containing browser name and version.
+            Tuple[str, str]: Browser name and version.
         """
         browser_info = self.user_agent.split('/')[1].split(' ')
         browser_name = browser_info[0]
@@ -31,6 +34,12 @@ class BrowserInfo:
 
     @staticmethod
     def check_latest_version():
+        """
+        Checks for the latest version of Chrome.
+
+        Returns:
+            str or None: Latest version of Chrome as a string, or None if there was an error fetching it.
+        """
         url = "https://www.whatismybrowser.com/guides/the-latest-version/chrome"
 
         try:
@@ -43,3 +52,4 @@ class BrowserInfo:
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
             return None
+
